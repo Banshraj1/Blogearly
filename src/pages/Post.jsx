@@ -24,6 +24,8 @@ export default function Post() {
   }, [slug, navigate]);
 
   const deletePost = () => {
+    console.log(post.$id);
+    
     appwriteService.deletePost(post.$id).then((status) => {
       if (status) {
         appwriteService.deleteFile(post.featuredImage);
@@ -49,6 +51,7 @@ export default function Post() {
                   Edit
                 </Button>
               </Link>
+
               <Button bgColor="bg-red-500" onClick={deletePost}>
                 Delete
               </Button>

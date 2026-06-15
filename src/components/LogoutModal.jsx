@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import authService from "../appwrite/auth";
 // import { logout } from "../../store/authSlice";
 import { logout } from "../store/authSlice";
+import { NavLink } from "react-router-dom";
 
 function LogoutModal({ isOpen, setShowModal }) {
   if (!isOpen) return null;
@@ -14,8 +15,10 @@ function LogoutModal({ isOpen, setShowModal }) {
   const logoutHandler = () => {
     authService.logout().then(() => {
       dispatch(logout());
+      setShowModal(false);
+      window.location.reload();
     });
-    setShowModal(false);
+    
   };
 
   return (
@@ -35,13 +38,14 @@ function LogoutModal({ isOpen, setShowModal }) {
           >
             Cancel
           </button>
-
-          <button
-            onClick={logoutHandler}
-            className=" px-4 py-2 rounded-lg bg-red-500 hover:bg-red-600 transition-all "
-          >
-            Logout
-          </button>
+          <NavLink to={'/'}>
+            <button
+              onClick={logoutHandler}
+              className=" px-4 py-2 rounded-lg bg-red-500 hover:bg-red-600 transition-all "
+            >
+              Logout
+            </button>
+          </NavLink>
         </div>
       </div>
     </div>

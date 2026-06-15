@@ -12,7 +12,7 @@ export default function PostForm({ post }) {
         title: post?.title || "",
         slug: post?.$id || "",
         content: post?.content || "",
-        status: post?.status || "active",
+        status: post?.status || true,
       },
     });
 
@@ -20,6 +20,7 @@ export default function PostForm({ post }) {
   const userData = useSelector((state) => state.auth.userData);
 
   const submit = async (data) => {
+    console.log(data);
     if (post) {
       const file = data.image[0]
         ? await appwriteService.uploadFile(data.image[0])
@@ -30,8 +31,8 @@ export default function PostForm({ post }) {
       }
 
       const dbPost = await appwriteService.updatePost(post.$id, {
-        ...data,
         featuredImage: file ? file.$id : undefined,
+        ...data,
       });
 
       if (dbPost) {
@@ -75,6 +76,8 @@ export default function PostForm({ post }) {
 
     return () => subscription.unsubscribe();
   }, [watch, slugTransform, setValue]);
+  console.log("featured image ==",post?.featuredImage);
+  
 
   return (
     <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
@@ -109,7 +112,7 @@ export default function PostForm({ post }) {
           type="file"
           className="mb-4"
           accept="image/png, image/jpg, image/jpeg, image/gif"
-          {...register("image", { required: !post })}
+          {...register("image", { required: true })}
         />
         {post && (
           <div className="w-full mb-4">
@@ -129,7 +132,8 @@ export default function PostForm({ post }) {
         <Button
           type="submit"
           bgColor={post ? "bg-green-500" : undefined}
-          className="w-full"
+          className="w-full hover:bg-gray-700/80"
+              // bgColor="bg-gray-700/60"
         >
           {post ? "Update" : "Submit"}
         </Button>

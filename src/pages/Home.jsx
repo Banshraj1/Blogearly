@@ -20,7 +20,7 @@ function Home() {
           <div className="flex flex-wrap">
             <div className="p-2 w-full h-96 flex items-center justify-center">
               <h1 className="text-2xl font-bold hover:text-gray-500">
-                No posts avalibe to read
+                Login or Sinup to see post
                 <br />
                 😟
               </h1>
