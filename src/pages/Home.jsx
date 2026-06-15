@@ -1,12 +1,20 @@
 import React, { useEffect, useState } from "react";
 import appwriteService from "../appwrite/config";
 import { Container, Postcard } from "../components";
+import { Query } from "appwrite";
+import { useSelector } from "react-redux";
 
 function Home() {
   const [posts, setPosts] = useState([]);
 
+  const userData = useSelector((state) => state.auth.userData);
+  // console.log(userData);
+  let queries = [Query.equal("status", true)];
+  if (userData) {
+    queries = [Query.equal("userId", userData?.$id)];
+  }
   useEffect(() => {
-    appwriteService.getPosts().then((posts) => {
+    appwriteService.getPosts(queries).then((posts) => {
       if (posts) {
         setPosts(posts.documents);
       }

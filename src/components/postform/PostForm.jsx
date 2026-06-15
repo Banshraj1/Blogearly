@@ -12,7 +12,7 @@ export default function PostForm({ post }) {
         title: post?.title || "",
         slug: post?.$id || "",
         content: post?.content || "",
-        status: post?.status || true,
+        status: post?.status || "active",
       },
     });
 
@@ -66,7 +66,7 @@ export default function PostForm({ post }) {
 
     return "";
   }, []);
-
+ 
   React.useEffect(() => {
     const subscription = watch((value, { name }) => {
       if (name === "title") {
@@ -131,7 +131,7 @@ export default function PostForm({ post }) {
         />
         <Button
           type="submit"
-          bgColor={post ? "bg-green-500" : undefined}
+          bgColor={post ? "bg-green-500" : "bg-red-500"}
           className="w-full hover:bg-gray-700/80"
               // bgColor="bg-gray-700/60"
         >
