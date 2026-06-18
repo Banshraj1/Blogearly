@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { data, Link, useNavigate, useParams } from "react-router-dom";
 import appwriteService from "../appwrite/config";
 import { Button, Container } from "../components";
 import parse from "html-react-parser";
@@ -11,35 +11,39 @@ export default function Post() {
   const navigate = useNavigate();
 
   const userData = useSelector((state) => state.auth.userData);
+  // console.log("");
 
   const isAuthor = post && userData ? post.userId === userData.$id : false;
+  // console.log(isAuthor);
 
   useEffect(() => {
-    if (slug) {
-      appwriteService.getPost(slug).then((post) => {
-        if (post) setPost(post);
-        else navigate("/");
+     appwriteService
+      .getPost(slug)
+      .then((postData) => setPost(postData))
+      .catch((err) => {
+        console.log("error in fetching post data", err);
       });
-    } else navigate("/");
-  }, [slug, navigate]);
+  }, [slug]);
 
   const deletePost = () => {
-    appwriteService.deletePost(post.$id,post.featuredImage).then((status) => {
+    appwriteService.deletePost(post.$id, post.featuredImage).then((status) => {
       if (status) {
         appwriteService.deleteFile(post.featuredImage);
         navigate("/");
       }
     });
   };
+  console.log("post request recieved slug=", slug, " userdata=", userData);
+  console.log("post=", post);
 
   return post ? (
     <div className="py-8 bg-gray-50 min-h-screen">
+      {console.log("inside of content")}
       <Container>
         <div className="max-w-6xl mx-auto">
           {/* Header Card */}
           <div className="bg-white rounded-3xl shadow-lg p-6 md:p-8">
             <div className="flex flex-col md:flex-row gap-50">
-              
               {/* Image */}
               <div className="flex-shrink-0 flex justify-center">
                 <img
@@ -93,5 +97,9 @@ export default function Post() {
         </div>
       </Container>
     </div>
-  ) : null;
+  ) : (
+    <>
+      <h2>this is null</h2>
+    </>
+  );
 }

@@ -35,7 +35,7 @@ export class Service {
         const response = await this.databases.createDocument(
           conf.appwriteDatabaseId,
           conf.appwriteCollectionId,
-          slug+Date.now(),
+          slug + Date.now(),
           {
             title,
             content,
@@ -44,6 +44,7 @@ export class Service {
             userId,
             authorName,
           },
+          [Permission.read(Role.any())],
         );
         console.log(response);
         return response;
@@ -70,6 +71,7 @@ export class Service {
           status: status === "public" || status === true ? true : false,
           authorName,
         },
+        [Permission.read(Role.any())],
       );
     } catch (error) {
       console.log(error);
@@ -94,11 +96,14 @@ export class Service {
 
   async getPost(slug) {
     try {
-      return await this.databases.getDocument({
+      
+      const response= await this.databases.getDocument({
         databaseId: conf.appwriteDatabaseId,
         collectionId: conf.appwriteCollectionId,
         documentId: slug,
       });
+      // console.log("response of get post",response);
+      return response;
     } catch (error) {
       console.log(error);
     }
