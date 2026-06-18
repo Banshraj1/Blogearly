@@ -17,7 +17,7 @@ export default function Post() {
   // console.log(isAuthor);
 
   useEffect(() => {
-     appwriteService
+    appwriteService
       .getPost(slug)
       .then((postData) => setPost(postData))
       .catch((err) => {
@@ -33,12 +33,9 @@ export default function Post() {
       }
     });
   };
-  console.log("post request recieved slug=", slug, " userdata=", userData);
-  console.log("post=", post);
 
   return post ? (
     <div className="py-8 bg-gray-50 min-h-screen">
-      {console.log("inside of content")}
       <Container>
         <div className="max-w-6xl mx-auto">
           {/* Header Card */}

@@ -43,13 +43,14 @@ export default function PostForm({ post }) {
       let file = data.image[0]
         ? await appwriteService.uploadFile(data.image[0])
         : null;
+      console.log(file);
+
       if (!file) {
-        console.log("file not found sample image updated");
         file = {
-          $id: "6a339e1e001cb31d7b8a",
+          $id: "6a33c1cb0017da616fe7",
           bucketId: "69a95f820015ca848e8f",
-          $createdAt: "2026-06-18T07:28:30.210+00:00",
-          $updatedAt: "2026-06-18T07:28:30.210+00:00",
+          $createdAt: "2026-06-18T10:00:42.823+00:00",
+          $updatedAt: "2026-06-18T10:00:42.823+00:00",
           $permissions: [
             'read("user:6a2e2912001eeb44641b")',
             'update("user:6a2e2912001eeb44641b")',
@@ -66,7 +67,6 @@ export default function PostForm({ post }) {
           compression: "none",
         };
       }
-
       if (file) {
         console.log(file);
         const fileId = file.$id;

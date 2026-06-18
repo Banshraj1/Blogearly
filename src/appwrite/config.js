@@ -96,8 +96,7 @@ export class Service {
 
   async getPost(slug) {
     try {
-      
-      const response= await this.databases.getDocument({
+      const response = await this.databases.getDocument({
         databaseId: conf.appwriteDatabaseId,
         collectionId: conf.appwriteCollectionId,
         documentId: slug,
@@ -111,7 +110,7 @@ export class Service {
   // https://cdn.tiny.cloud/1/no-api-key/tinymce/8/tinymce.min.js
   // https://www.tiny.cloud/docs/tinymce/latest/invalid-api-key/?utm_campaign=no_api_key_learn_more&utm_source=tiny&utm_medium=referral
   async getPosts(queries = [Query.equal("status", true)]) {
-    console.log(queries);
+    // console.log(queries);
 
     try {
       console.log("getpost tried");
@@ -143,7 +142,10 @@ export class Service {
 
   async deleteFile(fileId) {
     try {
-      if (fileId == sampleData.$id) return "";
+      if (fileId == sampleData.$id){
+        console.log("file matched not deleted");
+        
+         return "";}
       console.log("file deleted");
 
       return await this.bucket.deleteFile(conf.appwriteBucketId, fileId);
@@ -164,7 +166,12 @@ export class Service {
   getFileUrl(fileId) {
     try {
       const url = `${conf.appwriteUrl}/storage/buckets/${conf.appwriteBucketId}/files/${fileId}/view?project=${conf.appwriteId}`;
+      console.log(url);
+      const url2 = `${conf.appwriteUrl}/storage/buckets/${conf.appwriteBucketId}/files/${fileId}/view?project=${conf.appwriteId}&impersonateuserid=&mode=Guests`;
+
       // console.log(url);
+      //https://fra.cloud.appwrite.io/v1/storage/buckets/69a95f820015ca848e8f/files/6a33a631003ad1c40187/view?project=69a95c54001a008f870d&impersonateuserid=&mode=admin
+      //https://fra.cloud.appwrite.io/v1/storage/buckets/69a95f820015ca848e8f/files/6a339e1e001cb31d7b8a/view?project=69a95c54001a008f870d
       return url;
     } catch (error) {
       console.log(error);
