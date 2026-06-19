@@ -35,7 +35,7 @@ export class Service {
         const response = await this.databases.createDocument(
           conf.appwriteDatabaseId,
           conf.appwriteCollectionId,
-          slug + Date.now(),
+          slug +"-"+(Date.now())%1000,
           {
             title,
             content,

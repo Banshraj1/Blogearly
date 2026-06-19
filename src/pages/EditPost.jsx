@@ -26,7 +26,11 @@ function EditPost() {
         <PostForm post={post} />
       </Container>
     </div>
-  ) : null;
+  ) : (
+    <>
+      <h2>loading...</h2>
+    </>
+  );
 }
 
 export default EditPost;

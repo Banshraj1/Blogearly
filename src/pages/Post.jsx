@@ -33,7 +33,7 @@ export default function Post() {
       }
     });
   };
-
+  console.log("post data=",post);
   return post ? (
     <div className="py-8 bg-gray-50 min-h-screen">
       <Container>
@@ -94,9 +94,5 @@ export default function Post() {
         </div>
       </Container>
     </div>
-  ) : (
-    <>
-      <h2>this is null</h2>
-    </>
-  );
+  ) : null;
 }
